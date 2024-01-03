@@ -1,0 +1,19 @@
+﻿@model Cw2.Models.LoginModel
+
+<div class="login-container">
+    <div class="background"></div>
+    <div class="login-content">
+        <div class="login-form">
+            <h2>Login</h2>
+            <form method="post">
+                <input asp-for="Email" class="form-control" placeholder="Email" />
+                <input asp-for="Password" type="password" class="form-control" placeholder="Password" />
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <div class="signup-section">
+                <p>Don't have an account?'</p>
+                <button type="button" class="btn btn-primary">Signup</button>
+            </div>
+        </div>
+    </div>
+</div>

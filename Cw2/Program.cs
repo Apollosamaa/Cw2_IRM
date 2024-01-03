@@ -23,6 +23,15 @@ builder.Services.AddSession(options =>
 builder.Services.AddScoped<AuthenticationHelper>();
 builder.Services.AddScoped<SessionHelper>();
 
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders(); // Clear existing providers
+    logging.AddConsole(); // Add console logging
+    logging.AddDebug(); // Add debug logging
+    // Add more providers if needed (e.g., logging to a file, etc.)
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

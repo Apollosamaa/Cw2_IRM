@@ -37,7 +37,19 @@ namespace Cw2.Controllers
             {
                 return NotFound();
             }
+            return user;
+        }
 
+        // GET: api/Users/ByEmail?email={email}
+        [HttpGet("ByEmail")]
+        public async Task<ActionResult<User>> GetUserByEmail(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
             return user;
         }
 
@@ -68,7 +80,6 @@ namespace Cw2.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
@@ -95,7 +106,6 @@ namespace Cw2.Controllers
 
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

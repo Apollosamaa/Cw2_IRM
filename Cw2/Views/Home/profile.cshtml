@@ -4,34 +4,38 @@
 {
     <div class="profile-container">
         <div class="profile-header">
-            <h3>@($"{Model.ProfileFname ?? "Unknown"} {Model.ProfileLname ?? "Unknown"}")</h3>
-            @if (!string.IsNullOrEmpty(Model.ProfileBio))
-            {
-                <h6>@Model.ProfileBio</h6>
-            }
-
-            <div class="profile-info">
-                @if (Model.ProfileDob.HasValue)
+            <div class="name-and-bio">
+                <h3>@($"{Model.ProfileFname ?? "Unknown"} {Model.ProfileLname ?? "Unknown"}")</h3>
+                @if (!string.IsNullOrEmpty(Model.ProfileBio))
                 {
-                    <span class="info-bubble">Birthday: @Model.ProfileDob.Value.ToString("yyyy-MM-dd")</span>
+                    <h6>@Model.ProfileBio</h6>
                 }
+            </div>
+            <div class="profile-info-and-button d-flex justify-content-between align-items-center">
+                <div class="profile-info">
+                    @if (Model.ProfileDob.HasValue)
+                    {
+                        <span class="info-bubble">Birthday: @Model.ProfileDob.Value.ToString("yyyy-MM-dd")</span>
+                    }
 
-                @if (Model.ProfileWeight.HasValue)
-                {
-                    <span class="info-bubble">Weight: @Model.ProfileWeight.Value</span>
-                }
+                    @if (Model.ProfileWeight.HasValue)
+                    {
+                        <span class="info-bubble">Weight: @Model.ProfileWeight.Value</span>
+                    }
 
-                @if (Model.ProfileHeight.HasValue)
-                {
-                    <span class="info-bubble">Height: @Model.ProfileHeight.Value</span>
-                }
+                    @if (Model.ProfileHeight.HasValue)
+                    {
+                        <span class="info-bubble">Height: @Model.ProfileHeight.Value</span>
+                    }
 
-                @if (Model != null && Model.ProfileLocationNavigation != null)
-                {
-                    <span class="info-bubble">Location: @Model.ProfileLocationNavigation.LocationName</span>
-                }
-
-
+                    @if (Model != null && Model.ProfileLocationNavigation != null)
+                    {
+                        <span class="info-bubble">Location: @Model.ProfileLocationNavigation.LocationName</span>
+                    }
+                </div>
+                <div class="ml-auto">
+                    <a href="@Url.Action("EditProfile", "Profile")" class="btn btn-primary">Edit Profile</a>
+                </div>
             </div>
         </div>
 

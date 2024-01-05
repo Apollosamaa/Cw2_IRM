@@ -145,5 +145,19 @@ namespace Cw2.Helpers
 
             return null;
         }
+
+        public async Task<List<Location>> GetLocationsAsync()
+        {
+            var response = await _profileClient.GetAsync("locations");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var locations = JsonSerializer.Deserialize<List<Location>>(jsonString);
+                return locations;
+            }
+
+            return null;
+        }
     }
 }

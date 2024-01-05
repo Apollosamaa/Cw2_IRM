@@ -1,0 +1,37 @@
+﻿<!-- Inside EditProfile.cshtml -->
+@model Cw2.Models.Profile
+
+<form asp-action="UpdateProfile" method="post">
+    <div class="form-group">
+        <label for="profileFname">First Name:</label>
+        <input type="text" id="profileFname" name="ProfileFname" value="@Model.ProfileFname" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="profileLname">Last Name:</label>
+        <input type="text" id="profileLname" name="ProfileLname" value="@Model.ProfileLname" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="profileWeight">Weight:</label>
+        <input type="number" id="profileWeight" name="ProfileWeight" value="@Model.ProfileWeight" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="profileHeight">Height:</label>
+        <input type="number" id="profileHeight" name="ProfileHeight" value="@Model.ProfileHeight" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="profileDob">Birthday:</label>
+        <input type="date" id="profileDob" name="ProfileDob" value="@Model.ProfileDob?.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="location">Location</label>
+        @Html.DropDownList("location", ViewBag.Locations as SelectList, new { @class = "form-control" })
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>

@@ -36,9 +36,9 @@ public class HomeController : Controller
         HttpContext.Session.Clear();
         return RedirectToAction("Index", "Home");
     }
-    public IActionResult Profile()
+    public IActionResult Profile() 
     {
-        return View();
+        return RedirectToAction("ViewProfile","Profile");
     }
 
 }

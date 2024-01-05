@@ -37,6 +37,7 @@ public class LoginController : Controller
                     HttpContext.Session.SetString("email", model.Email);
                     HttpContext.Session.SetInt32("userId", userId.Value);
                     _logger.LogInformation($"Login successful for {model.Email}. Redirecting...");
+                    _logger.LogInformation($"User ID {userId.Value} logged in successfully.");
                     return RedirectToAction("Index", "Home");
                 }
                 else

@@ -41,6 +41,20 @@ namespace Cw2.Controllers
             return profile;
         }
 
+        [HttpGet("ByUserId/{userId}")]
+        public async Task<ActionResult<Profile>> GetProfileByUserId(int userId)
+        {
+            var profile = await _context.Profiles.FirstOrDefaultAsync(p => p.UserId == userId);
+
+            if (profile == null)
+            {
+                return NotFound();
+            }
+
+            return profile;
+        }
+
+
         // PUT: api/Profiles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

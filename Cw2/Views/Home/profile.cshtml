@@ -1,48 +1,51 @@
-﻿@model Cw2.Models.ProfileModel
+﻿@model Cw2.Models.Profile
 
-<div class="profile-container">
-    <div class="profile-header">
-        <h3>@Model.Email</h3> <!-- Assuming Email is equivalent to username for your project -->
-
-        <div class="profile-info">
-            @if (!string.IsNullOrEmpty(Model.FirstName) || !string.IsNullOrEmpty(Model.LastName))
+@if (Model != null)
+{
+    <div class="profile-container">
+        <div class="profile-header">
+            <h3>@($"{Model.ProfileFname ?? "Unknown"} {Model.ProfileLname ?? "Unknown"}")</h3>
+            @if (!string.IsNullOrEmpty(Model.ProfileBio))
             {
-                <h5>@Model.FirstName @Model.LastName</h5>
+                <h6>@Model.ProfileBio</h6>
             }
 
-            <div class="optional-info">
-                @if (Model.DateOfBirth.HasValue)
+            <div class="profile-info">
+                @if (Model.ProfileDob.HasValue)
                 {
-                    <span class="info-bubble">Birthday: @Model.DateOfBirth.Value.ToString("yyyy-MM-dd")</span>
+                    <span class="info-bubble">Birthday: @Model.ProfileDob.Value.ToString("yyyy-MM-dd")</span>
                 }
-                @if (!string.IsNullOrEmpty(Model.Location))
+
+                @if (Model.ProfileWeight.HasValue)
                 {
-                    <span class="info-bubble">Location: @Model.Location</span>
+                    <span class="info-bubble">Weight: @Model.ProfileWeight.Value</span>
                 }
-                @if (Model.Weight.HasValue)
+
+                @if (Model.ProfileHeight.HasValue)
                 {
-                    <span class="info-bubble">Weight: @Model.Weight.Value</span>
+                    <span class="info-bubble">Height: @Model.ProfileHeight.Value</span>
                 }
-                @if (Model.Height.HasValue)
-                {
-                    <span class="info-bubble">Height: @Model.Height.Value</span>
-                }
+
                 <!-- Add more optional details as needed -->
             </div>
         </div>
-    </div>
 
-    <div class="profile-body">
-        <div class="profile-sidebar">
-            <!-- Left side - Picture, Friends, Achievements -->
-            <h3>Sidebar Section</h3>
-            <!-- Add content for sidebar -->
-        </div>
+        <div class="profile-body">
+            <div class="profile-sidebar">
+                <!-- Left side - Picture, Friends, Achievements -->
+                <h3>Sidebar Section</h3>
+                <!-- Add content for sidebar -->
+            </div>
 
-        <div class="profile-feed">
-            <!-- Right side - Post Feed -->
-            <h3>Feed Section</h3>
-            <!-- Add content for feed -->
+            <div class="profile-feed">
+                <!-- Right side - Post Feed -->
+                <h3>Feed Section</h3>
+                <!-- Add content for feed -->
+            </div>
         </div>
     </div>
-</div>
+}
+else
+{
+    <p>Profile not found</p>
+}

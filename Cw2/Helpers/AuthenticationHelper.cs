@@ -10,12 +10,16 @@ namespace Cw2.Helpers
     public class AuthenticationHelper
     {
         private readonly HttpClient _httpClient;
+        private readonly HttpClient _profileClient;
         private readonly ILogger<AuthenticationHelper> _logger;
 
         public AuthenticationHelper(ILogger<AuthenticationHelper> logger)
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri("https://web.socem.plymouth.ac.uk/COMP2001/auth/api/");
+            _profileClient = new HttpClient();
+            _profileClient.BaseAddress = new Uri("https://localhost:7088/api/");
+
             _logger = logger;
         }
 
@@ -90,13 +94,35 @@ namespace Cw2.Helpers
 
         public async Task<Profile> GetUserProfileAsync(int userId)
         {
-            var response = await _httpClient.GetAsync($"api/profiles?userId={userId}");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var jsonString = await response.Content.ReadAsStringAsync();
-                var profiles = JsonSerializer.Deserialize<List<Profile>>(jsonString);
-                return profiles.FirstOrDefault(p => p.UserId == userId);
+                var response = await _profileClient.GetAsync($"Profiles/ByUserId/{userId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    var profile = JsonSerializer.Deserialize<Profile>(jsonString);
+
+                    if (profile != null)
+                    {
+                        _logger.LogInformation("User profile found successfully.");
+                        return profile;
+                    }
+                    else
+                    {
+                        _logger.LogError($"User profile not found for user ID: {userId}");
+                    }
+                }
+                else
+                {
+                    _logger.LogError($"Error fetching user profile. StatusCode: {response.StatusCode}");
+                }
             }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Exception while fetching user profile: {ex.Message}");
+            }
+
             return null;
         }
     }

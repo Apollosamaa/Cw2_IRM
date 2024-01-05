@@ -9,6 +9,5 @@
         public string Location { get; set; }
         public decimal? Weight { get; set; }
         public decimal? Height { get; set; }
-        // Add more properties as needed
     }
 }

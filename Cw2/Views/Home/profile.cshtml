@@ -26,7 +26,12 @@
                     <span class="info-bubble">Height: @Model.ProfileHeight.Value</span>
                 }
 
-                <!-- Add more optional details as needed -->
+                @if (Model != null && Model.ProfileLocationNavigation != null)
+                {
+                    <span class="info-bubble">Location: @Model.ProfileLocationNavigation.LocationName</span>
+                }
+
+
             </div>
         </div>
 

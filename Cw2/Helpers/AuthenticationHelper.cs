@@ -91,31 +91,51 @@ namespace Cw2.Helpers
             }
             return null;
         }
-
         public async Task<Profile> GetUserProfileAsync(int userId)
         {
             try
             {
-                var response = await _profileClient.GetAsync($"Profiles/ByUserId/{userId}");
+                var profileResponse = await _profileClient.GetAsync($"Profiles/ByUserId/{userId}");
 
-                if (response.IsSuccessStatusCode)
+                if (profileResponse.IsSuccessStatusCode)
                 {
-                    var jsonString = await response.Content.ReadAsStringAsync();
-                    var profile = JsonSerializer.Deserialize<Profile>(jsonString);
+                    var profileJsonString = await profileResponse.Content.ReadAsStringAsync();
+                    var profile = JsonSerializer.Deserialize<Profile>(profileJsonString);
 
-                    if (profile != null)
+                    if (profile != null && profile.ProfileLocation.HasValue)
                     {
-                        _logger.LogInformation("User profile found successfully.");
-                        return profile;
+                        var locationResponse = await _profileClient.GetAsync($"Locations/{profile.ProfileLocation}");
+
+                        if (locationResponse.IsSuccessStatusCode)
+                        {
+                            var locationJsonString = await locationResponse.Content.ReadAsStringAsync();
+                            var location = JsonSerializer.Deserialize<Location>(locationJsonString);
+
+                            if (location != null)
+                            {
+                                profile.ProfileLocationNavigation = location;
+                                _logger.LogInformation("User profile found successfully with location details.");
+                            }
+                            else
+                            {
+                                _logger.LogError($"Location not found for location ID: {profile.ProfileLocation}");
+                            }
+                        }
+                        else
+                        {
+                            _logger.LogError($"Error fetching location. StatusCode: {locationResponse.StatusCode}");
+                        }
                     }
                     else
                     {
-                        _logger.LogError($"User profile not found for user ID: {userId}");
+                        _logger.LogError($"Profile not found for user ID: {userId} or location ID is missing.");
                     }
+
+                    return profile; // Return the profile, regardless of location details
                 }
                 else
                 {
-                    _logger.LogError($"Error fetching user profile. StatusCode: {response.StatusCode}");
+                    _logger.LogError($"Error fetching user profile. StatusCode: {profileResponse.StatusCode}");
                 }
             }
             catch (Exception ex)

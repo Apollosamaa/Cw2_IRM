@@ -88,13 +88,25 @@ public class ProfileController : Controller
             userProfile.ProfileWeight = updatedProfile.ProfileWeight;
             userProfile.ProfileHeight = updatedProfile.ProfileHeight;
             userProfile.ProfileDob = updatedProfile.ProfileDob;
+            userProfile.ProfileLocation = updatedProfile.ProfileLocation;
+            userProfile.ProfileBio = updatedProfile.ProfileBio; // Add this line to update the bio
 
-            // Assuming you have an API method like this to update the profile
-            // await _authenticationHelper.UpdateProfileInAPI(userProfile);
+            // The UserId, ProfileArchive, and ProfileCreatedAt fields should remain unchanged
+            // They are already part of the userProfile object retrieved from the GetUserProfileAsync method
 
-            return RedirectToAction("ViewProfile");
+            // Send a PUT request to your API to update the profile
+            var response = await _authenticationHelper.UpdateProfileInAPI(userProfile);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("ViewProfile");
+            }
+            else
+            {
+                // Handle the error (e.g., display an error message to the user)
+            }
         }
 
-        return View("ProfileNotFound");
+        return RedirectToAction("Index", "Home");
     }
 }

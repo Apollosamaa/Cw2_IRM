@@ -159,5 +159,16 @@ namespace Cw2.Helpers
 
             return null;
         }
+
+        public async Task<HttpResponseMessage> UpdateProfileInAPI(Profile updatedProfile)
+        {
+            var jsonString = JsonSerializer.Serialize(updatedProfile);
+            var httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+            var response = await _profileClient.PutAsync($"profiles/{updatedProfile.ProfileId}", httpContent);
+
+            return response;
+        }
+
     }
 }

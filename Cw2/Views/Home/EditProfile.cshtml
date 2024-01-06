@@ -13,6 +13,11 @@
     </div>
     <br />
     <div class="form-group">
+        <label for="profileBio">Bio:</label>
+        <textarea id="profileBio" name="ProfileBio" class="form-control">@Model.ProfileBio</textarea>
+    </div>
+    <br />
+    <div class="form-group">
         <label for="profileWeight">Weight:</label>
         <input type="number" id="profileWeight" name="ProfileWeight" value="@Model.ProfileWeight" class="form-control" />
     </div>
@@ -28,9 +33,10 @@
     </div>
     <br />
     <div class="form-group">
-        <label for="location">Location</label>
-        @Html.DropDownList("location", ViewBag.Locations as SelectList, new { @class = "form-control" })
+        <label for="ProfileLocation">Location</label>
+        @Html.DropDownList("ProfileLocation", ViewBag.Locations as SelectList, new { @class = "form-control" })
     </div>
+
 
     <br />
     <button type="submit" class="btn btn-primary">Save Changes</button>

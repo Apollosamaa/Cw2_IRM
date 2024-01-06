@@ -21,6 +21,7 @@ html {
 body {
     margin-bottom: 60px;
     font-family: 'Verdana', sans-serif;
+    font-weight: bold;
 }
 
 /* Background image for the login container */
@@ -99,14 +100,18 @@ body {
 }
 
 .profile-header {
-    height: 20%;
+    height: 25%;
     width: 100%;
+    font-family: 'Verdana', sans-serif;
+    font-weight: bold;
 }
 
 .profile-body {
     display: flex;
-    height: 80%;
+    height: 75%;
     width: 100%;
+    font-family: 'Verdana', sans-serif;
+    font-weight: bold;
 }
 
 .profile-sidebar {
@@ -121,11 +126,27 @@ body {
 
 .info-bubble {
     display: inline-block;
-    background-color: dimgrey;
-    color: white;
+    background-color: lightblue;
+    color: darkblue;
     padding: 5px 10px;
     margin: 5px;
     border-radius: 20px;
 }
+
+.btn-primary {
+    background-color: #525CEB; /* Change to the desired color */
+    color: white; /* Text color */
+    border-radius: 30px;
+    padding: 5px 15px;
+    font-family: 'Verdana', sans-serif;
+    font-weight: bold;
+}
+
+    /* Hover and Focus styles for the primary button */
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #001B79; /* Change the hover/focus color if needed */
+        color: white; /* Text color */
+    }
 
 </style >
